@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <header className="bg-slate-300 shadow-md">
+    <header style={{ backgroundColor: "rgb(6, 17, 33)" }} className="shadow-md ">
       <div className="flex justify-between items-center max-w-7xl mx-auto p-3">
-        <Link to='/'>
+        <Link to="/">
           <div className="font-bold text-sm sm:text-xl flex flex-wrap gap-1">
             <span className="text-slate-500">
               <svg
@@ -21,93 +21,40 @@ export default function Header() {
                 />
               </svg>
             </span>
-            <span className="text-slate-700">CryptoApp</span>
+            <span className="text-white">CryptoApp</span>
           </div>
         </Link>
-        <div className="flex grow justify-end">
-          <input
-            className="flex h-10 w-[250px] rounded-md bg-gray-100 px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 text-black sm:w-64"
-            type="text"
-            placeholder="Search Coin"
-          />
-        </div>
+     
         <div className="hidden lg:block">
           <ul className="ml-12 inline-flex space-x-8">
-            <Link to='/'>
+            <Link to="/">
               <li>
                 <a
                   href="#"
-                  className="inline-flex items-center text-sm font-semibold text-gray-800 hover:underline"
+                  className="inline-flex items-center text-sm font-bold text-gray-400 hover:text-white"
                 >
                   Home
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="ml-2 h-4 w-4"
-                    >
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                  </span>
                 </a>
               </li>
             </Link>
-            <Link to='/about'>
+            <Link to="/about">
               <li>
                 <a
                   href="#"
-                  className="inline-flex items-center text-sm font-semibold text-gray-800 hover:underline"
+                  className="inline-flex items-center text-sm font-semibold text-gray-400 hover:text-white"
                 >
                   About
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="ml-2 h-4 w-4"
-                    >
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                  </span>
+                  <span></span>
                 </a>
               </li>
             </Link>
-            <Link to='/signIn'>
+            <Link to="/signIn">
               <li>
                 <a
                   href="#"
-                  className="inline-flex items-center text-sm font-semibold  text-gray-800 hover:underline"
+                  className="inline-flex items-center text-sm font-semibold  text-gray-400 hover:text-white"
                 >
                   Sign In
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="ml-2 h-4 w-4"
-                    >
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                  </span>
                 </a>
               </li>
             </Link>
