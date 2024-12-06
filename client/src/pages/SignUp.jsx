@@ -40,7 +40,6 @@ export default function SignUp() {
       loading(false);
     }
   };
-  console.log(formData);
 
   return (
     <div className="min-h-screen  text-gray-900 flex justify-center items-center">
@@ -118,7 +117,6 @@ export default function SignUp() {
           </div>
         </div>
         <div className="flex-1  hidden lg:flex">
-          <div className="m-12 xl:m-16">
             <video
               autoPlay
               loop
@@ -129,7 +127,6 @@ export default function SignUp() {
             </video>
           </div>
         </div>
-      </div>
     </div>
   );
 }

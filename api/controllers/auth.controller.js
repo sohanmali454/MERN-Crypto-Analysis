@@ -42,14 +42,13 @@ export const signIn = async (req, res, next) => {
     });
     console.log("Found user:", validUser);
     if (!validUser) {
-      console.log("User not found!");
-      return next(errorHandler(404, "User not found!"));
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found!" });
     }
-
     //Decrypt and Compare password in hashcode
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) {
-      console.log("Wrong credentials!");
       return next(errorHandler(401, "Wrong credentials!"));
     }
 

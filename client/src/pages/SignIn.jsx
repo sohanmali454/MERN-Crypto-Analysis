@@ -1,24 +1,45 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import bg1 from "../assets/bg1.mp4";
 import logo from "../assets/growth.png";
 
-function LogIN() {
-  const [txtUserName, setUserName] = useState("");
-  const [txtPassword, setPassword] = useState("");
+export default function SignIn() {
+  const [error, setError] = useState(null);
+  const [formData, setFormdata] = useState({});
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    setFormdata({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
 
-  function userNameChange(event) {
-    setUserName(event.currentTarget.value);
-  }
+      const res = await fetch("/api/auth/signIn", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-  function passwordChange(event) {
-    setPassword(event.currentTarget.value);
-  }
-
-  function handleSignIn() {
-    console.log("Username:", txtUserName);
-    console.log("Password:", txtPassword);
-  }
+      const data = await res.json();
+      if (data.success === false) {
+        setError(data.message);
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+      setError(null);
+      navigate("/creptoDashboard");
+    } catch (error) {
+      loading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen text-gray-900 flex justify-center items-center">
@@ -46,45 +67,52 @@ function LogIN() {
                 </div>
               </div>
               <div className="mx-auto max-w-xs">
-                <input
-                  className="w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                  type="text"
-                  placeholder="UserName/Email Address"
-                  onChange={userNameChange}
-                  value={txtUserName}
-                />
-                <input
-                  className="w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                  type="password"
-                  placeholder="Password"
-                  onChange={passwordChange}
-                  value={txtPassword}
-                />
-                <button
-                  className="mt-5 tracking-wide font-semibold bg-green-400 text-white w-full py-3 rounded-lg hover:bg-green-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-                  onClick={handleSignIn}
-                >
-                  <svg
-                    className="w-5 h-5 -ml-1"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    viewBox="0 0 24 24"
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                  <input
+                    className="w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                    id="email"
+                    type="text"
+                    placeholder="Email-Id"
+                    onChange={handleChange}
+                  />
+                  <input
+                    className="w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                    id="password"
+                    type="password"
+                    placeholder="Password"
+                    onChange={handleChange}
+                  />
+                  <button
+                    disabled={loading}
+                    className="mt-5 tracking-wide font-semibold bg-green-400 text-white-500 w-full py-4 rounded-lg hover:bg-green-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                   >
-                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                    <circle cx="8.5" cy="7" r="4" />
-                    <path d="M20 8v6M23 11h-6" />
-                  </svg>
-                  <span className="ml-2">Sign In</span>
-                </button>
+                    <svg
+                      className="w-5 h-5 -ml-1"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                      <circle cx="8.5" cy="7" r="4" />
+                      <path d="M20 8v6M23 11h-6" />
+                    </svg>
+                    <span className="ml-2">Sign In</span>
+                  </button>
+                </form>
                 <p className="mt-6 text-sm text-gray-600 text-center">
                   Don't have an account yet?{" "}
                   <NavLink to="/signUp">
                     <span className="text-blue-500">Sign Up</span>
                   </NavLink>
-                </p>
+                </p>{" "}
+                {error && (
+                  <p className="mt-6 text-xs text-red-500 text-center">
+                    {error}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -93,5 +121,3 @@ function LogIN() {
     </div>
   );
 }
-
-export default LogIN;
