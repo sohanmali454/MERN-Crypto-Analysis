@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import bg1 from "../assets/bg1.mp4";
 import logo from "../assets/growth.png";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInSuccess,
+  SignInFailure,
+} from "../redux/user/userSlice";
 
 export default function SignIn() {
-  const [error, setError] = useState(null);
   const [formData, setFormdata] = useState({});
-  const [loading, setLoading] = useState(false);
+  const{loading,error}=useSelector((state)=>state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setFormdata({
       ...formData,
@@ -17,8 +23,7 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signIn", {
         method: "POST",
         headers: {
@@ -29,15 +34,13 @@ export default function SignIn() {
 
       const data = await res.json();
       if (data.success === false) {
-        setError(data.message);
-        setLoading(false);
+        dispatch(SignInFailure(data.message));
         return;
       }
-      setLoading(false);
-      setError(null);
+      dispatch(signInSuccess(data));
       navigate("/creptoDashboard");
     } catch (error) {
-      loading(false);
+      dispatch(SignInFailure(data.message));
     }
   };
 
